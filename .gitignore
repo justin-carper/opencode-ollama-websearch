@@ -1,0 +1,6 @@
+.DS_Store
+node_modules
+dist
+*.log
+.serena
+session-ses_*.md
