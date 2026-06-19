@@ -37,5 +37,14 @@
     "ollama",
     "web-search"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "author": "Justin Carper",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/justin-carper/opencode-ollama-websearch.git"
+  },
+  "homepage": "https://github.com/justin-carper/opencode-ollama-websearch#readme",
+  "bugs": {
+    "url": "https://github.com/justin-carper/opencode-ollama-websearch/issues"
+  }
 }
