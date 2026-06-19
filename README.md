@@ -38,39 +38,9 @@ Add the plugin to your `opencode.json` — opencode auto-installs npm plugins vi
 
 Restart opencode. The tools are now available to the agent.
 
-### From a local file (for development / dogfooding)
-
-Drop a re-export into `.opencode/plugins/`:
-
-```ts
-// .opencode/plugins/ollama-websearch.ts
-export { default, ollamaWebSearchPlugin } from "../../dist/index.js";
-```
-
-Local plugin files in `.opencode/plugins/` are auto-loaded at startup — no `opencode.json` entry needed.
-
 ## API key setup
 
 The plugin reads `OLLAMA_API_KEY` from the environment. Get a free key at https://ollama.com/settings/keys.
-
-Recommended: keep the key out of any committed file.
-
-```bash
-# ~/.secrets (chmod 600, never committed)
-export OLLAMA_API_KEY=your_key
-
-# ~/.zshrc
-[ -f ~/.secrets ] && source ~/.secrets
-```
-
-For higher security, pull from a secret manager so no plaintext lives on disk:
-
-```bash
-# ~/.zshrc
-export OLLAMA_API_KEY=$(op read "op://Private/ollama/api_key")   # 1Password CLI
-# or
-export OLLAMA_API_KEY=$(security find-generic-password -s ollama -w)  # macOS Keychain
-```
 
 Never put the key in `opencode.json` — that file is often committed and shared.
 
@@ -87,7 +57,7 @@ For direct user invocation, install the bundled slash commands (see below):
 
 ## Bundled skill: `using-ollama-web-search`
 
-Teaches agents when and how to use the tools. Installed automatically by the one-command install above, or manually:
+Teaches agents when and how to use the tools. Installed automatically by the one-command install. To install manually:
 
 ```bash
 cp -R skill/using-ollama-web-search ~/.agents/skills/
@@ -98,7 +68,7 @@ cp -R skill/using-ollama-web-search ~/.agents/skills/
 - `/ollama-search <query>` — run `ollama_web_search` and print results inline.
 - `/ollama-fetch <url>` — run `ollama_web_fetch` and print content inline.
 
-Installed automatically by the one-command install, or manually:
+Installed automatically by the one-command install. To install manually without the script, copy the files from this repo:
 
 ```bash
 cp commands/ollama-search.md commands/ollama-fetch.md ~/.config/opencode/commands/
@@ -118,9 +88,7 @@ Requires [Bun](https://bun.sh) 1.3+. See [CONTRIBUTING.md](./CONTRIBUTING.md) fo
 
 ## Why this exists
 
-Ollama ships a Python MCP server for web search. That works, but it requires `uv`, Python, and an MCP layer. This plugin is the no-Python, opencode-native alternative: pure TypeScript, installed via `opencode.json`, loaded by Bun at startup, and exposed as first-class tools the agent can call directly.
-
-The built-in opencode web search uses Exa and is gated behind the OpenCode provider or `OPENCODE_ENABLE_EXA`. This plugin is Ollama-first and works with any provider.
+The built-in opencode web search uses Exa and is gated behind the OpenCode provider or `OPENCODE_ENABLE_EXA`. This plugin is Ollama-first: pure TypeScript, works with any provider, and needs no separate MCP server or Python runtime.
 
 ## License
 
