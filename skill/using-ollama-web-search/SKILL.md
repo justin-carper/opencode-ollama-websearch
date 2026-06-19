@@ -84,14 +84,6 @@ The plugin throws on non-2xx. Branch on the HTTP status:
 
 The error message includes the response body — read it for specifics.
 
-## How this differs from opencode's built-in web search
-
-Opencode ships a built-in web search backed by Exa, gated behind the OpenCode
-provider or `OPENCODE_ENABLE_EXA`. This plugin is Ollama-first: it works with
-any provider, needs no separate binary, and gives you both search and page
-extraction in one install. Pick it when you already have an Ollama API key, or
-when the built-in search isn't available in your setup.
-
 ## Red flags — stop and re-read this skill
 
 - About to call `ollama_web_search` with `max_results: 10` on a narrow query → STOP, use 5
